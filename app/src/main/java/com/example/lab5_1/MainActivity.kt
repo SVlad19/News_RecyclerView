@@ -3,6 +3,8 @@ package com.example.lab5_1
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
@@ -17,8 +19,25 @@ class MainActivity : AppCompatActivity() {
 
         val news = getNews()
         val rvNews = findViewById<RecyclerView>(R.id.rvNews)
-        rvNews.adapter = NewsAdapter(news, this)
+
+        rvNews.adapter = NewsAdapter(news, this,
+            object : NewsCallback{
+                override fun OnItemSelected(iconLike: ImageView, amountLike: TextView) {
+                    if(amountLike.text == "0"){
+                        iconLike.setImageBitmap(BitmapFactory.decodeResource(resources,R.drawable.icon_like_state2))
+                        amountLike.text = "1"
+                    }else{
+                        iconLike.setImageBitmap(BitmapFactory.decodeResource(resources,R.drawable.icon_like_state1))
+                        amountLike.text = "0"
+                    }
+
+                }
+
+            }
+            )
+
         rvNews.layoutManager = LinearLayoutManager(this)
+
 
     }
 

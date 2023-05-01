@@ -8,9 +8,11 @@ import android.widget.ImageView
 import android.widget.TextView
 
 import androidx.recyclerview.widget.RecyclerView
+import org.w3c.dom.Text
 
 
-class NewsAdapter(val listNews: ArrayList<News>,val context: Context): RecyclerView.Adapter<ViewHolder>() {
+class NewsAdapter(val listNews: ArrayList<News>,val context: Context, val callback: NewsCallback):
+    RecyclerView.Adapter<ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_news,parent,false))
@@ -24,6 +26,10 @@ class NewsAdapter(val listNews: ArrayList<News>,val context: Context): RecyclerV
         holder.header.text = listNews[position].header
         holder.description.text = listNews[position].description
         holder.image.setImageBitmap(listNews[position].image)
+
+        holder.iconLike.setOnClickListener(){
+            callback.OnItemSelected(holder.iconLike,holder.amountLike)
+        }
     }
 }
 
@@ -31,4 +37,11 @@ class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
     val image: ImageView = itemView.findViewById(R.id.ivNews)
     val header: TextView = itemView.findViewById(R.id.tvHeader)
     val description: TextView = itemView.findViewById(R.id.tvDescription)
+    val iconLike: ImageView = itemView.findViewById(R.id.ivLike)
+    val amountLike: TextView = itemView.findViewById(R.id.tvAmountLike)
+}
+
+interface NewsCallback{
+    fun OnItemSelected(iconLike: ImageView, amountLike: TextView)
+
 }
