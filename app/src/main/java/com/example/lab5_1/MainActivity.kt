@@ -1,6 +1,8 @@
 package com.example.lab5_1
 
+import android.content.Intent
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
@@ -19,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
         val news = getNews()
         val rvNews = findViewById<RecyclerView>(R.id.rvNews)
+        val intent = Intent(this,Details::class.java)
 
         rvNews.adapter = NewsAdapter(news, this,
             object : NewsCallback{
@@ -33,8 +36,15 @@ class MainActivity : AppCompatActivity() {
 
                 }
 
-            }
-            )
+                override fun NextActivity(mainImage: ImageView, headerText: TextView, description: TextView) {
+
+                    intent.putExtra("headerText", headerText.text)
+                    intent.putExtra("description", description.text)
+                    //intent.putExtra("image", mainImage.id)
+
+                    startActivity(intent)
+                }
+            })
 
         rvNews.layoutManager = LinearLayoutManager(this)
 

@@ -1,6 +1,7 @@
 package com.example.lab5_1
 
 import android.content.Context
+import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,6 +31,10 @@ class NewsAdapter(val listNews: ArrayList<News>,val context: Context, val callba
         holder.iconLike.setOnClickListener(){
             callback.OnItemSelected(holder.iconLike,holder.amountLike)
         }
+
+        holder.image.setOnClickListener(){
+            callback.NextActivity(holder.image, holder.header,holder.description)
+        }
     }
 }
 
@@ -43,5 +48,5 @@ class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
 
 interface NewsCallback{
     fun OnItemSelected(iconLike: ImageView, amountLike: TextView)
-
+    fun NextActivity(mainImage: ImageView, headerText: TextView, description: TextView)
 }
